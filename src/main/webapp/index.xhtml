@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+    <p:growl id="growl" globalOnly="true"/>
+
+    <p:outputPanel rendered="#{sessionBean.post != null}">
+        <h:form>
+            <h:panelGrid columns="3" style="text-align: left">
+                <h:outputLabel value="name: " for="username"/>
+                <p:inputText id="username" value="#{sessionBean.post.userName}" required="true"
+                             validatorMessage="Your name is greate than 50 characters!">
+                        <f:validateLength maximum="40" />
+                </p:inputText>
+                <p:message for="username"/>
+
+                <h:outputLabel value="e-mail: " for="useremail"/>
+                <p:inputText id="useremail" value="#{sessionBean.post.userEmail}" required="true"
+                             validatorMessage="Please enter your email, EG: yourid@domain.com">
+                    <f:validateRegex
+                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                </p:inputText>
+                <p:message for="useremail"/>
+
+                <h:outputLabel value="Text: " for="comment"/>
+                <p:inputTextarea id="comment" value="#{sessionBean.post.text}" required="true"/>
+                <p:message for="comment"/>
+                <p:commandButton value="Post"
+                                 action="#{sessionBean.createPost}" update="@all"/>
+            </h:panelGrid>
+        </h:form>
+    </p:outputPanel>
+
+    <p:outputPanel rendered="#{postService.posts != null}">
+        <p:outputPanel id="posts">
+            <p:dataTable value="#{postService.posts}" var="post"
+                         sortBy="#{post.date}" sortOrder="DESCENDING">
+                <p:column headerText="User">
+                    <h:outputText value="#{post.userName}"/>
+                </p:column>
+                <p:column headerText="E-mail">
+                    <h:outputText value="#{post.userEmail}"/>
+                </p:column>
+                <p:column headerText="Comment" style="white-space:normal; word-wrap: break-word;">
+                    <h:outputText value="#{post.text}"/>
+                </p:column>
+                <p:column headerText="Date">
+                    <h:outputText value="#{post.date}">
+                        <!--Moscow timeZone-->
+                        <f:convertDateTime type="both" pattern="dd-MM-yyyy HH:mm:ss" timeZone="GMT+3"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:outputPanel>
+    </p:outputPanel>
+</h:body>
+</html>
