@@ -1,4 +1,4 @@
-####Guestbook/
+##Guestbook
 Guestbook presents an opportunity for site users post messages on the site.
 All entered by user data save in programm memory.
 Form for adding message must contains next fields:
@@ -9,7 +9,7 @@ Messages must be in datatable, sorting on date column(from new to old).
 
 Spring / JSF / Tomcat / Maven.
 
-## Launching
+#### Launching
 For successful deploying of application all imported by Maven files need to be putted in WEB-INF/lib folder.
 App deployed with Tomcat8.
 
